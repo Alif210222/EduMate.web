@@ -50,7 +50,7 @@ const features = [
 
 const CoreFeatures = () => {
   return (
-    <section className="py-16 px-6 md:px-16 bg-white">
+    <section className="py-16 px-6 md:mt-10 md:px-16 bg-white">
       {/* Heading */}
       <motion.div
         initial={{ opacity: 0, y: -40 }}
@@ -59,13 +59,15 @@ const CoreFeatures = () => {
         viewport={{ once: true }}
         className="text-center mb-12"
       >
+
         <h2 className="text-4xl font-extrabold text-gray-800">
-          Core <span className="text-orange-500">Features</span>
+          Core<span className="text-orange-500">Features</span>
         </h2>
         <p className="mt-3 text-gray-600 max-w-2xl mx-auto">
           Everything you need to stay organized, productive, and successful —
           all in one place.
         </p>
+      
       </motion.div>
 
       {/* Feature Cards */}
@@ -78,7 +80,7 @@ const CoreFeatures = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
             viewport={{ once: true }}
-            className="p-6 bg-white rounded-2xl shadow-md border hover:shadow-xl 
+            className="p-6 bg-white rounded-2xl shadow-md border-2 border-gray-400 hover:border-orange-500 hover:shadow-xl 
                        transition-all duration-300 group flex flex-col items-start"
           >
             <div className="mb-4">{feature.icon}</div>
