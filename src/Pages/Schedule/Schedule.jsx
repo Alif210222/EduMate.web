@@ -65,10 +65,10 @@ const SchedulePage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-white px-6 md:px-12 md:mt-16 py-10">
+    <div className="min-h-screen bg-white px-6 md:px-12 md:mt-1 py-10">
       {/* Header */}
       <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="mb-10 mt-6 text-center">
-        <h1 className="text-4xl font-bold text-orange-600">📅 My Schedule</h1>
+        <h1 className="text-4xl font-bold text-blue-600">📅 My Schedule</h1>
         <p className="text-gray-600 mt-2">Plan your day, stay productive, and never miss a deadline.</p>
       </motion.div>
 

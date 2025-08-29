@@ -7,6 +7,7 @@ import Root from './Root/Root';
 import HomePage from './Pages/HomePage/HomePage';
 import SchedulePage from './Pages/Schedule/Schedule';
 import BudgetTracker from './Pages/BudgetTraker/BudgetTracker';
+import NotePage from './Pages/Note/Note';
 
 
 
@@ -28,6 +29,10 @@ import BudgetTracker from './Pages/BudgetTraker/BudgetTracker';
         path:"/budget",
         element:<BudgetTracker></BudgetTracker>
 
+    },
+    {
+      path:"/notes",
+      Component:NotePage
     }
     ]
   },
