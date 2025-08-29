@@ -24,7 +24,7 @@ const steps = [
 
 const HowItWorks = () => {
   return (
-    <section className="py-16 px-6 md:px-16 bg-gray-50">
+    <section className="py-16 md:mt-14 px-6 md:px-16 bg-gray-50">
       {/* Heading */}
       <motion.div
         initial={{ opacity: 0, y: -30 }}

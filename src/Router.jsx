@@ -5,6 +5,10 @@ import { createBrowserRouter } from "react-router";
 import { RouterProvider } from "react-router/dom";
 import Root from './Root/Root';
 import HomePage from './Pages/HomePage/HomePage';
+import SchedulePage from './Pages/Schedule/Schedule';
+import BudgetTracker from './Pages/BudgetTraker/BudgetTracker';
+
+
 
 
  export const router = createBrowserRouter([
@@ -16,6 +20,15 @@ import HomePage from './Pages/HomePage/HomePage';
        index:true,
        Component:HomePage,
     },
+    {
+       path:"/schedule",
+       Component:SchedulePage
+    },
+    {
+        path:"/budget",
+        element:<BudgetTracker></BudgetTracker>
+
+    }
     ]
   },
 ]);
