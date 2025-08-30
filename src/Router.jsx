@@ -8,6 +8,9 @@ import HomePage from './Pages/HomePage/HomePage';
 import SchedulePage from './Pages/Schedule/Schedule';
 import BudgetTracker from './Pages/BudgetTraker/BudgetTracker';
 import NotePage from './Pages/Note/Note';
+import Dictionary from './Pages/Dictionary/Dictionary';
+import DictionaryPage from './Pages/Dictionary/Dictionary';
+import Signup from './Pages/Signup/Signup';
 
 
 
@@ -33,6 +36,14 @@ import NotePage from './Pages/Note/Note';
     {
       path:"/notes",
       Component:NotePage
+    },
+    {
+      path:"/dictionary",
+      Component:DictionaryPage
+    },
+    {
+      path:"/signup",
+      Component:Signup
     }
     ]
   },

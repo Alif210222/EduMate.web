@@ -1,7 +1,14 @@
-import React from 'react';
+import React, { use } from 'react';
 import { Link, NavLink } from 'react-router';
+import { AuthContext } from '../Context/Authcontext';
 
 const Navbar = () => {
+      const {user,logOut} = use(AuthContext)
+      // console.log(user.email)
+
+
+
+
   const links = (
     <>
       <li className="font-medium">
@@ -34,7 +41,7 @@ const Navbar = () => {
           Budget Tracker
         </NavLink>
       </li>
-      <li className="font-medium">
+      {/* <li className="font-medium">
         <NavLink
           className={({ isActive }) =>
             isActive ? "bg-green-300 border border-green-500 px-3 py-1 rounded-lg" : "px-3 py-1 rounded-lg"
@@ -43,7 +50,7 @@ const Navbar = () => {
         >
           Study Planner
         </NavLink>
-      </li>
+      </li> */}
       <li className="font-medium">
         <NavLink
           className={({ isActive }) =>
@@ -64,7 +71,7 @@ const Navbar = () => {
           Dictionary
         </NavLink>
       </li>
-      <li className="font-medium">
+      {/* <li className="font-medium">
         <NavLink
           className={({ isActive }) =>
             isActive ? "bg-green-300 border border-green-500 px-3 py-1 rounded-lg" : "px-3 py-1 rounded-lg"
@@ -73,7 +80,7 @@ const Navbar = () => {
         >
           Translator
         </NavLink>
-      </li>
+      </li> */}
     </>
   );
 
@@ -114,8 +121,13 @@ const Navbar = () => {
 
         {/* Right */}
         <div className="navbar-end gap-2">
-          <Link className="btn border border-green-500 px-4 py-2">Login</Link>
-          <Link className="btn border border-green-500 px-4 py-2">Registration</Link>
+             {
+               !user ?  <Link to="/signup" className="btn border border-green-500 px-4 py-2">SignUp</Link>
+                : <Link onClick={logOut} className="btn border border-green-500 px-4 py-2">Sign out</Link> 
+             }
+        
+
+          
         </div>
       </div>
     </div>

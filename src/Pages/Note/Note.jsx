@@ -5,6 +5,7 @@ import { PlusCircle, NotebookPen } from "lucide-react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const NotePage = ({ user }) => {
+  
   const [notes, setNotes] = useState([]);
   const { register, handleSubmit, reset } = useForm();
   const axiosSecure = useAxiosSecure()
@@ -19,27 +20,34 @@ const NotePage = ({ user }) => {
 //     }
 //   }, [user?.email]);
 
+useEffect(()=>{
+          axiosSecure.get("/note")
+          .then(res=>{
+            // console.log(res.data)
+            setNotes(res.data)
+          })
+},[])
 
 
 
 
+ // Handle New Note Submission
+const onSubmit = async (data) => {
+  const newNote = { ...data, email: user?.email };
 
-  // Handle New Note Submission
-  const onSubmit = async (data) => {
-    const newNote = { ...data, email: user?.email };
+  try {
+    const res = await axiosSecure.post("/note", newNote);
 
-    const res = await fetch("http://localhost:5000/notes", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newNote),
-    });
-
-    if (res.ok) {
-      const savedNote = await res.json();
-      setNotes((prev) => [...prev, savedNote]);
+    if (res.data) {
+      setNotes((prev) => [...prev, res.data]); // instantly show
       reset();
     }
-  };
+  } catch (error) {
+    console.error("Error saving note:", error);
+  }
+};
+
+
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-6 mb-10">
@@ -54,7 +62,7 @@ const NotePage = ({ user }) => {
 
       <div className="grid md:grid-cols-3 gap-6">
         {/* Add Note Form */}
-        <div className="md:col-span-1 bg-white shadow rounded-xl p-6 border">
+        <div className="md:col-span-1 h-fit bg-white shadow rounded-xl p-6 border">
           <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
             <PlusCircle size={20} /> Add New Note
           </h2>
@@ -100,31 +108,37 @@ const NotePage = ({ user }) => {
         </div>
 
         {/* Notes List */}
-        <div className="md:col-span-2 grid sm:grid-cols-2 gap-4">
-          {notes.length > 0 ? (
-            notes.map((note, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-xl shadow hover:shadow-lg transition"
-              >
-                <h3 className="text-lg font-bold text-gray-800">
-                  {note.title}
-                </h3>
-                <p className="text-sm text-gray-500">{note.subject}</p>
-                <p className="text-gray-700 mt-2">{note.description}</p>
-                <p className="text-xs text-right text-gray-400 mt-2">
-                  {note.date}
-                </p>
-              </motion.div>
-            ))
-          ) : (
-            <p className="text-center text-gray-500 col-span-2">
-              No notes yet. Add your first note!
+       {/* Notes List */}
+<div className="md:col-span-2">
+  <div className="bg-white shadow rounded-xl p-6 border h-[600px] overflow-y-auto">
+    <h2 className="text-lg font-semibold mb-4">Your Notes</h2>
+    <div className="grid sm:grid-cols-2 gap-4">
+      {notes.length > 0 ? (
+        notes.map((note, index) => (
+          <motion.div
+            key={index}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-xl shadow hover:shadow-lg transition"
+          >
+            <h3 className="text-lg font-bold text-gray-800">
+              {note.subject}
+            </h3>
+            <p className="text-sm text-gray-500">{note.title}</p>
+            <p className="text-gray-700 mt-2">{note.description}</p>
+            <p className="text-xs text-right text-gray-400 mt-2">
+              {note.date}
             </p>
-          )}
-        </div>
+          </motion.div>
+        ))
+      ) : (
+        <p className="text-center text-gray-500 col-span-2">
+          No notes yet. Add your first note!
+        </p>
+      )}
+    </div>
+  </div>
+</div>
       </div>
     </div>
   );
