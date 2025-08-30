@@ -1,51 +1,61 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
 import { PlusCircle, NotebookPen } from "lucide-react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { AuthContext } from "../../Context/Authcontext";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { toast } from "react-toastify";
+import { useDebounce } from "use-debounce";
 
-const NotePage = ({ user }) => {
-  
-  const [notes, setNotes] = useState([]);
+const NotePage = () => {
+  const {user,loading} = useContext(AuthContext)
+  // const [notes, setNotes] = useState([]);
   const { register, handleSubmit, reset } = useForm();
   const axiosSecure = useAxiosSecure()
+  const [search,setSearch] = useState("")
+  const [debouncedSearch] = useDebounce(search, 500);
 
-  // Fetch Notes by user email
-//   useEffect(() => {
-//     if (user?.email) {
-//       fetch(`http://localhost:5000/notes?email=${user.email}`)
-//         .then((res) => res.json())
-//         .then((data) => setNotes(data))
-//         .catch((err) => console.error(err));
-//     }
-//   }, [user?.email]);
 
-useEffect(()=>{
-          axiosSecure.get("/note")
-          .then(res=>{
-            // console.log(res.data)
-            setNotes(res.data)
-          })
-},[])
+
+const { data: notes = [], refetch,isLoading } = useQuery({
+  queryKey: ["notes", user?.email,debouncedSearch],
+   queryFn: async () => {
+    let query = `/note?email=${user?.email}`;
+    if (debouncedSearch.length >= 2) {
+      query += `&subject=${debouncedSearch}`;
+    }
+    const res = await axiosSecure.get(query);
+    // console.log(res)
+    return res.data;
+  },
+    enabled: !!user?.email,
+});
 
 
 
 
  // Handle New Note Submission
-const onSubmit = async (data) => {
-  const newNote = { ...data, email: user?.email };
+ // Mutation for creating note
+  const mutation = useMutation({
+    mutationFn: async (newNote) => {
+      const res = await axiosSecure.post("/note", newNote);
+      return res.data;
+    },
+    onSuccess: () => {
+      toast("Note added successfully")
+      refetch();  //  refresh list after adding
+      // reset();   //  clear form
+    },
+  });
 
-  try {
-    const res = await axiosSecure.post("/note", newNote);
+  // Handle New Note Submission
+  const onSubmit = (data) => {
+    const newNote = { ...data, email: user?.email };
+    mutation.mutate(newNote);
+  };
 
-    if (res.data) {
-      setNotes((prev) => [...prev, res.data]); // instantly show
-      reset();
-    }
-  } catch (error) {
-    console.error("Error saving note:", error);
-  }
-};
+  if (loading || isLoading) return <p>Loading...</p>;
 
 
 
@@ -110,8 +120,19 @@ const onSubmit = async (data) => {
         {/* Notes List */}
        {/* Notes List */}
 <div className="md:col-span-2">
-  <div className="bg-white shadow rounded-xl p-6 border h-[600px] overflow-y-auto">
-    <h2 className="text-lg font-semibold mb-4">Your Notes</h2>
+  <div className="bg-white shadow rounded-xl p-6 border h-[510px] overflow-y-auto">
+    <div className="flex justify-between items-center mb-8">
+          <h2 className="text-lg font-semibold">Your Notes</h2>
+
+          {/* 🔍 Search Input */}
+          <input
+            type="text"
+            placeholder="Search by subject (min 3 chars)..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="border px-3 py-2 rounded-md text-sm focus:ring focus:ring-blue-200"
+          />
+        </div>
     <div className="grid sm:grid-cols-2 gap-4">
       {notes.length > 0 ? (
         notes.map((note, index) => (

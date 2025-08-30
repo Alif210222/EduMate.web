@@ -5,10 +5,12 @@ import axios from "axios";
 import { motion } from "framer-motion";
 import { Calendar } from "lucide-react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { AuthContext } from "../../Context/Authcontext";
+import { toast } from "react-toastify";
 
 const BudgetTracker = () => {
   const axiosSecure = useAxiosSecure()
-//   const { user } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const { register, handleSubmit, reset } = useForm();
   const [costs, setCosts] = useState([]);
   const [monthlyTotal, setMonthlyTotal] = useState(0);
@@ -17,26 +19,25 @@ const BudgetTracker = () => {
   const todayDate = new Date().toISOString().split("T")[0]; // YYYY-MM-DD
 
   // ✅ Fetch user’s costs from backend
-//   useEffect(() => {
-//     if (user?.email) {
-//       axios
-//         .get(`http://localhost:5000/costs?email=${user.email}`)
-//         .then((res) => {
-//           setCosts(res.data);
+  // useEffect(() => {
+  //   if (user?.email) {
+  //   const res=   axiosSecure.get(`/costs?email=${user?.email}`)
+        
+  //         setCosts(res.data);
 
-//           // monthly total
-//           setMonthlyTotal(res.data.reduce((sum, c) => sum + c.amount, 0));
+  //         // monthly total
+  //         setMonthlyTotal(res.data.reduce((sum, c) => sum + c.amount, 0));
 
-//           // today’s total
-//           const todayCosts = res.data.filter((c) => c.date === todayDate);
-//           setTodayTotal(todayCosts.reduce((sum, c) => sum + c.amount, 0));
-//         })
-//         .catch((err) => console.error(err));
-//     }
-//   }, [user]);
+  //         // today’s total
+  //         const todayCosts = res.data.filter((c) => c.date === todayDate);
+  //         setTodayTotal(todayCosts.reduce((sum, c) => sum + c.amount, 0));
+  //       })
+  //       .catch((err) => console.error(err));
+  //   }
+  // }, [user]);
 
 useEffect(()=>{
-     axiosSecure.get("/cost")
+     axiosSecure.get(`/cost?email=${user?.email}`)
      .then(res =>{
         console.log(res.data)
           setCosts(res.data);
@@ -54,21 +55,22 @@ useEffect(()=>{
   // ✅ Add new cost (POST to backend)
   const onSubmit = async (data) => {
     const newCost = {
-      email:"alifsarkerrony@gmail.com", 
+      
       title: data.title,
       amount: parseFloat(data.amount),
       date: data.date,
-    //   email: user?.email,
+      email: user?.email,
     };
 
     // console.log(newCost)
 
     try {
       const res = await axiosSecure.post("/cost", newCost);
-      console.log(res)
+      
       if (res.data.insertedId) {
         const updatedCosts = [...costs, newCost];
         setCosts(updatedCosts);
+        toast("your Cost list added successfully")
 
         setMonthlyTotal(monthlyTotal + newCost.amount);
 

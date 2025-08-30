@@ -122,8 +122,8 @@ const Navbar = () => {
         {/* Right */}
         <div className="navbar-end gap-2">
              {
-               !user ?  <Link to="/signup" className="btn border border-green-500 px-4 py-2">SignUp</Link>
-                : <Link onClick={logOut} className="btn border border-green-500 px-4 py-2">Sign out</Link> 
+               !user ?  <Link to="/signup" className="btn border border-green-500 px-4 py-2">Signin</Link>
+                : <Link onClick={logOut} className="btn border border-green-500 px-4 py-2">Sign up</Link> 
              }
         
 
