@@ -4,7 +4,7 @@ import { User, ClipboardCheck, Rocket, ArrowBigRight } from "lucide-react";
 
 const steps = [
   {
-    title: "Sign Up / Log In",
+    title: "Sign In / Log In",
     desc: "Create your account in seconds and get access to all student tools.",
     icon: <User className="w-12 h-12 text-orange-500" />,
   },
@@ -76,7 +76,7 @@ const HowItWorks = () => {
             <span className="bg-amber-200 text-gray-800 rounded-full px-4 py-2 font-semibold">
               1
             </span>
-            <p className="font-medium text-lg">Sign Up / Login</p>
+            <p className="font-medium text-lg">Sign In / Login</p>
           </div>
 
           <ArrowBigRight className="text-orange-600 w-6 h-6 md:block hidden" />

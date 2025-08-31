@@ -11,6 +11,9 @@ import NotePage from './Pages/Note/Note';
 import Dictionary from './Pages/Dictionary/Dictionary';
 import DictionaryPage from './Pages/Dictionary/Dictionary';
 import Signup from './Pages/Signup/Signup';
+import AboutPage from './Pages/About/About';
+import StudyPlanner from './Pages/StudyPlaner/StudyPlaner';
+
 
 
 
@@ -38,8 +41,16 @@ import Signup from './Pages/Signup/Signup';
       Component:NotePage
     },
     {
+      path:"/studyPlaner",
+      Component:StudyPlanner
+    },
+    {
       path:"/dictionary",
       Component:DictionaryPage
+    },
+    {
+      path:"/about",
+      Component:AboutPage
     },
     {
       path:"/signup",

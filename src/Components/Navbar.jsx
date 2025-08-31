@@ -41,16 +41,16 @@ const Navbar = () => {
           Budget Tracker
         </NavLink>
       </li>
-      {/* <li className="font-medium">
+      <li className="font-medium">
         <NavLink
           className={({ isActive }) =>
             isActive ? "bg-green-300 border border-green-500 px-3 py-1 rounded-lg" : "px-3 py-1 rounded-lg"
           }
-          to="/studyPlan"
+          to="/studyPlaner"
         >
           Study Planner
         </NavLink>
-      </li> */}
+      </li>
       <li className="font-medium">
         <NavLink
           className={({ isActive }) =>
@@ -58,7 +58,7 @@ const Navbar = () => {
           }
           to="/notes"
         >
-          Note
+          Note & QA
         </NavLink>
       </li>
       <li className="font-medium">
@@ -71,16 +71,16 @@ const Navbar = () => {
           Dictionary
         </NavLink>
       </li>
-      {/* <li className="font-medium">
+      <li className="font-medium">
         <NavLink
           className={({ isActive }) =>
             isActive ? "bg-green-300 border border-green-500 px-3 py-1 rounded-lg" : "px-3 py-1 rounded-lg"
           }
-          to="/translator"
+          to="/about"
         >
-          Translator
+          About 
         </NavLink>
-      </li> */}
+      </li>
     </>
   );
 
@@ -122,7 +122,7 @@ const Navbar = () => {
         {/* Right */}
         <div className="navbar-end gap-2">
              {
-               !user ?  <Link to="/signup" className="btn border border-green-500 px-4 py-2">Signin</Link>
+               !user ?  <Link to="/signup" className="btn font-bold border border-green-500 px-4 py-2">Sign In with Google</Link>
                 : <Link onClick={logOut} className="btn border border-green-500 px-4 py-2">Sign up</Link> 
              }
         

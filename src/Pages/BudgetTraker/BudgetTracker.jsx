@@ -11,35 +11,30 @@ import { toast } from "react-toastify";
 const BudgetTracker = () => {
   const axiosSecure = useAxiosSecure()
   const { user } = useContext(AuthContext);
-  const { register, handleSubmit, reset } = useForm();
+  // useForm for income
+const { register: registerIncome, handleSubmit: handleIncomeSubmit, reset: resetIncome } = useForm();
+
+// useForm for cost
+const { register: registerCost, handleSubmit: handleCostSubmit, reset: resetCost } = useForm();
+
   const [costs, setCosts] = useState([]);
   const [monthlyTotal, setMonthlyTotal] = useState(0);
   const [todayTotal, setTodayTotal] = useState(0);
-
+  const [totalIncome,setTotalIncome] = useState(0);
+  const [savings,setSavings] = useState(0)
   const todayDate = new Date().toISOString().split("T")[0]; // YYYY-MM-DD
 
-  // ✅ Fetch user’s costs from backend
-  // useEffect(() => {
-  //   if (user?.email) {
-  //   const res=   axiosSecure.get(`/costs?email=${user?.email}`)
-        
-  //         setCosts(res.data);
+ 
+  // savings count 
+  useEffect(()=>{
+     setSavings(totalIncome - monthlyTotal)
+  },[totalIncome,monthlyTotal])
 
-  //         // monthly total
-  //         setMonthlyTotal(res.data.reduce((sum, c) => sum + c.amount, 0));
-
-  //         // today’s total
-  //         const todayCosts = res.data.filter((c) => c.date === todayDate);
-  //         setTodayTotal(todayCosts.reduce((sum, c) => sum + c.amount, 0));
-  //       })
-  //       .catch((err) => console.error(err));
-  //   }
-  // }, [user]);
-
+  // get cost data from  data base 
 useEffect(()=>{
      axiosSecure.get(`/cost?email=${user?.email}`)
      .then(res =>{
-        console.log(res.data)
+        // console.log(res.data)
           setCosts(res.data);
 
           setMonthlyTotal(res.data.reduce((sum, c) => sum + c.amount, 0));
@@ -50,12 +45,43 @@ useEffect(()=>{
 },[])
 
 
+// get income data from data base 
+ useEffect(()=>{
+       axiosSecure.get(`/income?email=${user?.email}`)
+      .then(res => {
+           setTotalIncome(res.data.reduce((sum,c) => sum + Number(c.amount), 0))
+            // setTotalIncome(res.data.amount)
+      })
+     
+ },[])
+
+
+// add income in database 
+   const onIncomeSubmit= async(data)=>{
+          const addIncome = {
+            title: data.title,
+            amount:parseFloat(data.amount),
+            email:user?.email
+          }
+          
+       try{
+        const res = await axiosSecure.post("/income",addIncome)
+             
+        if(res.data.insertedId){
+          
+          toast("your incomeAdded successfully")
+          setTotalIncome(res.data)
+        }
+       }   catch (error) {
+      console.error("Error saving cost:", error);
+    } 
+  
+ }
 
 
   // ✅ Add new cost (POST to backend)
-  const onSubmit = async (data) => {
+  const onCostSubmit = async (data) => {
     const newCost = {
-      
       title: data.title,
       amount: parseFloat(data.amount),
       date: data.date,
@@ -78,7 +104,7 @@ useEffect(()=>{
           setTodayTotal(todayTotal + newCost.amount);
         }
 
-        reset();
+        resetCost();
       }
     } catch (error) {
       console.error("Error saving cost:", error);
@@ -103,20 +129,39 @@ useEffect(()=>{
           <p className="text-lg">{todayDate}</p>
         </div>
         <div className="bg-green-100 p-4 rounded-lg shadow">
-          <h2 className="font-semibold">Monthly Total</h2>
+          <h2 className="font-semibold">Total Income</h2>
+          <p className="text-lg font-bold text-green-600">${totalIncome}</p>
+        </div>
+        <div className="bg-purple-100 p-4 rounded-lg shadow">
+           <h2 className="font-semibold">Total Savings</h2>
+           <p className="text-lg font-bold text-purple-600">${savings}</p>
+        </div>
+        <div className="bg-green-100 p-4 rounded-lg shadow">
+          <h2 className="font-semibold">Monthly Total Cost</h2>
           <p className="text-lg font-bold text-green-600">${monthlyTotal}</p>
         </div>
         <div className="bg-yellow-100 p-4 rounded-lg shadow">
-          <h2 className="font-semibold">Today’s Total</h2>
+          <h2 className="font-semibold">Today’s Total Cost</h2>
           <p className="text-lg font-bold text-yellow-600">${todayTotal}</p>
         </div>
       </div>
+      {/* Add income */}
+      <form onSubmit={handleIncomeSubmit(onIncomeSubmit)} className="bg-white p-4 rounded-xl shadow space-y-4">
+        <p className="font-bold">Add Income</p>
+        
+        <input type="text" placeholder="Income Title" {...registerIncome("title")} className="w-full border p-2 rounded" required />
+        <input type="number" placeholder="Amount" {...registerIncome("amount")} className="w-full border p-2 rounded" required />
+        <button type="submit" className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded">
+          Add Income
+        </button>
+      </form>
 
       {/* Add Cost Form */}
-      <form onSubmit={handleSubmit(onSubmit)} className="bg-white p-4 rounded-xl shadow space-y-4">
-        <input type="date" {...register("date")} className="w-full border p-2 rounded" required />
-        <input type="text" placeholder="Cost Title" {...register("title")} className="w-full border p-2 rounded" required />
-        <input type="number" placeholder="Amount" {...register("amount")} className="w-full border p-2 rounded" required />
+      <form onSubmit={handleCostSubmit(onCostSubmit)} className="bg-white p-4 rounded-xl shadow space-y-4">
+        <p className="font-bold">Add Cost</p>
+        <input type="date" {...registerCost("date")} className="w-full border p-2 rounded" required />
+        <input type="text" placeholder="Cost Title" {...registerCost("title")} className="w-full border p-2 rounded" required />
+        <input type="number" placeholder="Amount" {...registerCost("amount", {min: 0,max: 1000000})} className="w-full border p-2 rounded" required />
         <button type="submit" className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded">
           Add Cost
         </button>
