@@ -67,7 +67,7 @@ const { data: notes = [], refetch,isLoading } = useQuery({
         animate={{ opacity: 1, y: 0 }}
         className="text-4xl font-bold text-center text-blue-700 flex items-center justify-center gap-2 mb-16 mt-10"
       >
-        <NotebookPen size={30} /> My Notes
+        <NotebookPen size={30} /> My Notes & Q.A
       </motion.h1>
 
       <div className="grid md:grid-cols-3 gap-6">
@@ -127,7 +127,7 @@ const { data: notes = [], refetch,isLoading } = useQuery({
           {/* 🔍 Search Input */}
           <input
             type="text"
-            placeholder="Search by subject (min 3 chars)..."
+            placeholder="Search by subject (min 2 chars)..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="border px-3 py-2 rounded-md text-sm focus:ring focus:ring-blue-200"

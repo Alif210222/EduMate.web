@@ -123,7 +123,7 @@ const Navbar = () => {
         <div className="navbar-end gap-2">
              {
                !user ?  <Link to="/signup" className="btn font-bold border border-green-500 px-4 py-2">Sign In with Google</Link>
-                : <Link onClick={logOut} className="btn border border-green-500 px-4 py-2">Sign up</Link> 
+                : <Link onClick={logOut} className="btn border border-green-500 px-4 py-2">Sign Out</Link> 
              }
         
 
