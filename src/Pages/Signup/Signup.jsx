@@ -1,7 +1,7 @@
 import React, { use, useState } from 'react';
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from '../../Athentication/firebase';
-  import { Link, useNavigate } from "react-router";
+  import { Link, useLocation, useNavigate } from "react-router";
 import AuthProvider from '../../Context/AuthProvider';
 import { AuthContext } from '../../Context/Authcontext';
 import { FcGoogle } from "react-icons/fc";
@@ -11,6 +11,7 @@ const Signup = () => {
     const {setUser} = use(AuthContext)
     const navigate = useNavigate()
     const provider = new GoogleAuthProvider()
+    const location = useLocation()
 
 // Google Sign In
   const handleGoogleLogin =()=>{
@@ -18,9 +19,9 @@ const Signup = () => {
 
        signInWithPopup(auth,provider)
        .then(async(result)=>{
-        console.log(result)
+        // console.log(result)
         setUser(result)
-        navigate("/")
+        navigate(location?.state || "/")
 
        })
   }

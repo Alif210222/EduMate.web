@@ -112,15 +112,16 @@ useEffect(()=>{
   };
 
   return (
-    <div className="p-6 max-w-3xl mx-auto space-y-6 mt-16 min-h-screen">
+    <div className="p-6 max-w-3xl mx-auto space-y-6 mt-12 min-h-screen">
       {/* 🔹 Header */}
       <motion.h1
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
-        className="text-4xl font-bold text-center text-blue-700 flex items-center justify-center gap-2 mb-14"
+        className="text-4xl font-bold text-center text-blue-700 flex items-center justify-center gap-2 mb-4"
       >
         <Calendar size={26} /> Budget Tracker
       </motion.h1>
+      <p className="text-center mb-18">“Easily monitor your income, expenses, and savings in one place to take full control of your financial journey.”</p>
 
       {/* 🔹 Overview Section */}
       <div className="grid md:grid-cols-3 gap-4 text-center">
@@ -146,19 +147,19 @@ useEffect(()=>{
         </div>
       </div>
       {/* Add income */}
-      <form onSubmit={handleIncomeSubmit(onIncomeSubmit)} className="bg-white p-4 rounded-xl shadow space-y-4">
-        <p className="font-bold">Add Income</p>
+      <form onSubmit={handleIncomeSubmit(onIncomeSubmit)} className="bg-blue-50 p-4 rounded-xl shadow space-y-4">
+        <p className="font-bold text-xl">Add Income</p>
         
         <input type="text" placeholder="Income Title" {...registerIncome("title")} className="w-full border p-2 rounded" required />
         <input type="number" placeholder="Amount" {...registerIncome("amount")} className="w-full border p-2 rounded" required />
-        <button type="submit" className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded">
+        <button type="submit" className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
           Add Income
         </button>
       </form>
 
       {/* Add Cost Form */}
       <form onSubmit={handleCostSubmit(onCostSubmit)} className="bg-white p-4 rounded-xl shadow space-y-4">
-        <p className="font-bold">Add Cost</p>
+        <p className="font-bold text-xl">Add Cost</p>
         <input type="date" {...registerCost("date")} className="w-full border p-2 rounded" required />
         <input type="text" placeholder="Cost Title" {...registerCost("title")} className="w-full border p-2 rounded" required />
         <input type="number" placeholder="Amount" {...registerCost("amount", {min: 0,max: 1000000})} className="w-full border p-2 rounded" required />

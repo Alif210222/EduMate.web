@@ -65,10 +65,12 @@ const { data: notes = [], refetch,isLoading } = useQuery({
       <motion.h1
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
-        className="text-4xl font-bold text-center text-blue-700 flex items-center justify-center gap-2 mb-16 mt-10"
+        className="text-4xl font-bold text-center text-blue-700 flex items-center justify-center gap-2 mb-4 mt-10"
       >
         <NotebookPen size={30} /> My Notes & Q.A
+        
       </motion.h1>
+      <p className="mb-16 text-center">Collect  your note or question for future.That's help you to find your note and question and save your time.</p>
 
       <div className="grid md:grid-cols-3 gap-6">
         {/* Add Note Form */}
@@ -127,7 +129,7 @@ const { data: notes = [], refetch,isLoading } = useQuery({
           {/* 🔍 Search Input */}
           <input
             type="text"
-            placeholder="Search by subject (min 2 chars)..."
+            placeholder="Search by subject (2 chars)..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="border px-3 py-2 rounded-md text-sm focus:ring focus:ring-blue-200"

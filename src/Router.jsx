@@ -13,6 +13,8 @@ import DictionaryPage from './Pages/Dictionary/Dictionary';
 import Signup from './Pages/Signup/Signup';
 import AboutPage from './Pages/About/About';
 import StudyPlanner from './Pages/StudyPlaner/StudyPlaner';
+import PrivetRouter from './PrivetRouter/PrivetRouter';
+import ErrorPage from './Components/ErrorComponent';
 
 
 
@@ -21,6 +23,7 @@ import StudyPlanner from './Pages/StudyPlaner/StudyPlaner';
  export const router = createBrowserRouter([
   {
     path: "/",
+    errorElement:<ErrorPage></ErrorPage>,
     Component: Root,
     children:[
        {
@@ -29,20 +32,20 @@ import StudyPlanner from './Pages/StudyPlaner/StudyPlaner';
     },
     {
        path:"/schedule",
-       Component:SchedulePage
+       element:<PrivetRouter><SchedulePage></SchedulePage> </PrivetRouter>
     },
     {
         path:"/budget",
-        element:<BudgetTracker></BudgetTracker>
+        element:<PrivetRouter><BudgetTracker></BudgetTracker></PrivetRouter> 
 
     },
     {
       path:"/notes",
-      Component:NotePage
+      element:<PrivetRouter><NotePage></NotePage></PrivetRouter>
     },
     {
       path:"/studyPlaner",
-      Component:StudyPlanner
+     element:<PrivetRouter><StudyPlanner></StudyPlanner> </PrivetRouter>
     },
     {
       path:"/dictionary",

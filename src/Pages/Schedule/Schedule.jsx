@@ -114,7 +114,7 @@ const todayTasks = tasks.filter(task => task.date === todayDate);
     <div className="min-h-screen bg-gray-50 p-6 md:p-12 space-y-8">
       {/* Header */}
       <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-10">
-        <h1 className="text-4xl font-bold text-blue-600">📚 Study & Task Planner</h1>
+        <h1 className="text-4xl font-bold text-blue-600">📚 Class & Task Scheduler</h1>
         <p className="text-gray-600 mt-2">Plan your classes/task, allocate time, and manage your study efficiently.</p>
       </motion.div>
 
@@ -164,7 +164,7 @@ const todayTasks = tasks.filter(task => task.date === todayDate);
         {/* Add Schedule Form */}
         <motion.div className="bg-white p-6 rounded-2xl shadow-sm">
           <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
-            <PlusCircle /> Add New Class
+            <PlusCircle /> Add New Class / Task
           </h2>
           <form onSubmit={handleSubmit(addTask)} className="space-y-3">
             <input {...register("subject", { required: true })} placeholder="Subject / Task" className="w-full border px-3 py-2 rounded" />
@@ -185,7 +185,7 @@ const todayTasks = tasks.filter(task => task.date === todayDate);
 
         {/* All Schedule List */}
         <motion.div className="bg-white p-6 rounded-2xl shadow-sm lg:col-span-2">
-          <h2 className="text-xl font-semibold mb-4">All Classes</h2>
+          <h2 className="text-xl font-semibold mb-4">All Classes / Task List </h2>
           {tasks.length === 0 && <p className="text-gray-500">No classes scheduled yet.</p>}
           <ul className="space-y-3 max-h-80 overflow-y-auto">
             {tasks.map((task) =>

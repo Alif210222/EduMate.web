@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
-import { Calendar, BookOpen, Flag, Clock } from "lucide-react";
+import { Calendar, BookOpen, Flag, Clock,Trash2 } from "lucide-react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { AuthContext } from "../../Context/Authcontext";
 import { useContext } from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const StudyPlanner = () => {
   const { register, handleSubmit, reset } = useForm();
@@ -25,10 +27,18 @@ const StudyPlanner = () => {
   const mutation = useMutation({
     mutationFn: (newPlan) => axiosSecure.post("/studyplan", newPlan),
     onSuccess: () => {
+      toast("Your  daily Plan add successful")
       refetch();
       reset();
     },
   });
+
+  //delete plan
+  const deletePlan =async (id) =>{
+        const res = await axiosSecure.delete(`/deleteTask/${id}`)
+        toast("Plan delete successful")
+        refetch();
+  }
 
   const onSubmit = (data) => {
     const newPlan = {
@@ -40,16 +50,17 @@ const StudyPlanner = () => {
   };
 
   return (
-    <div className="p-8">
+    <div className="p-8 mb-28">
       {/* Header */}
-      <div className="flex justify-between items-center mb-8">
+      <div className="flex justify-between items-center mb-3">
         <h1 className="text-2xl font-bold text-gray-800">
-          📚 Study Planner
+          📚 Everyday Study Planner 
         </h1>
         <p className="text-gray-500">
           Break down your big study goals into small, achievable tasks
         </p>
       </div>
+      <p className="mb-10">Add your daily task with small part to easier your life.</p>
 
       <div className="grid md:grid-cols-2 gap-6">
         {/* Add Plan Form */}
@@ -58,7 +69,7 @@ const StudyPlanner = () => {
           animate={{ opacity: 1, x: 0 }}
           className="bg-white p-6 rounded-xl shadow-lg border"
         >
-          <h2 className="text-lg font-semibold mb-4">➕ Add Study Plan</h2>
+          <h2 className="text-lg font-semibold mb-4">➕ Add today's Study Plan</h2>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <input
               {...register("subject")}
@@ -104,7 +115,7 @@ const StudyPlanner = () => {
           animate={{ opacity: 1, x: 0 }}
           className="bg-white p-6 rounded-xl shadow-lg border h-[500px] overflow-y-auto"
         >
-          <h2 className="text-lg font-semibold mb-4">📖 Your Plans</h2>
+          <h2 className="text-lg font-semibold mb-4">📖 Your today's Plans</h2>
           {plans.length > 0 ? (
             <div className="space-y-4">
               {plans.map((plan, i) => (
@@ -135,9 +146,17 @@ const StudyPlanner = () => {
                     <Calendar className="w-4 h-4" /> Deadline:{" "}
                     {new Date(plan.deadline).toLocaleDateString()}
                   </p>
-                  <p className="text-sm text-gray-600 flex items-center gap-2 mt-1">
-                    <Clock className="w-4 h-4" /> Time: {plan.timeSlot}
+                  <div className="flex justify-between">
+                      <p className="text-sm text-gray-600 flex items-center gap-2 mt-1">
+                        <Clock className="w-4 h-4" /> Time: {plan.timeSlot}      
                   </p>
+                  <button onClick={()=>deletePlan(plan._id)}>
+                    <Trash2 className="text-black-600 cursor-pointer" />
+                  </button>
+                  </div>
+                  
+                  
+
                 </motion.div>
               ))}
             </div>
