@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
-import { PlusCircle, NotebookPen } from "lucide-react";
+import { PlusCircle, NotebookPen, Trash2 } from "lucide-react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { AuthContext } from "../../Context/Authcontext";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -54,6 +54,15 @@ const { data: notes = [], refetch,isLoading } = useQuery({
     const newNote = { ...data, email: user?.email };
     mutation.mutate(newNote);
   };
+
+
+//handle delete note
+ const handleDelete =async (id) =>{
+       const res = await axiosSecure.delete(`/deleteNote/${id}`)
+       refetch();
+ }
+
+
 
   if (loading || isLoading) return <p>Loading...</p>;
 
@@ -149,9 +158,13 @@ const { data: notes = [], refetch,isLoading } = useQuery({
             </h3>
             <p className="text-sm text-gray-500">{note.title}</p>
             <p className="text-gray-700 mt-2">{note.description}</p>
-            <p className="text-xs text-right text-gray-400 mt-2">
-              {note.date}
-            </p>
+            <div className="flex justify-between ">
+                 <p className="text-xs  text-gray-400 mt-2">
+                      {note.date}
+                 </p>
+                 <button onClick={()=>handleDelete(note._id)}><Trash2 className="text-red-500 cursor-pointer"></Trash2></button>
+            </div>
+            
           </motion.div>
         ))
       ) : (
