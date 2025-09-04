@@ -69,9 +69,9 @@ useEffect(()=>{
              
         if(res.data.insertedId){
           
-          toast("your incomeAdded successfully")
+          toast("Your Income Added successfully")
            setTotalIncome((prev) => prev + addIncome.amount);
-           
+
            resetIncome()
         }
        }   catch (error) {
@@ -98,7 +98,7 @@ useEffect(()=>{
       if (res.data.insertedId) {
         const updatedCosts = [...costs, newCost];
         setCosts(updatedCosts);
-        toast("your Cost list added successfully")
+        toast("Cost added  successfully")
 
         setMonthlyTotal(monthlyTotal + newCost.amount);
 

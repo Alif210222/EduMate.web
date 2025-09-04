@@ -7,6 +7,7 @@ import { AuthContext } from "../../Context/Authcontext";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { useDebounce } from "use-debounce";
+import Loading from "../../Components/Loading";
 
 const NotePage = () => {
   const {user,loading} = useContext(AuthContext)
@@ -64,7 +65,7 @@ const { data: notes = [], refetch,isLoading } = useQuery({
 
 
 
-  if (loading || isLoading) return <p>Loading...</p>;
+  if (loading || isLoading) return <Loading></Loading>;
 
 
 
