@@ -42,7 +42,7 @@ useEffect(()=>{
            const todayCosts = res.data.filter((c) => c.date === todayDate);
            setTodayTotal(todayCosts.reduce((sum, c) => sum + c.amount, 0));
      })
-},[])
+},[user?.email])
 
 
 // get income data from data base 
@@ -70,7 +70,9 @@ useEffect(()=>{
         if(res.data.insertedId){
           
           toast("your incomeAdded successfully")
-          setTotalIncome(res.data)
+           setTotalIncome((prev) => prev + addIncome.amount);
+           
+           resetIncome()
         }
        }   catch (error) {
       console.error("Error saving cost:", error);

@@ -1,4 +1,4 @@
-import React, { use, useState } from 'react';
+import React, { use, useContext, useState } from 'react';
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from '../../Athentication/firebase';
   import { Link, useLocation, useNavigate } from "react-router";
@@ -8,7 +8,7 @@ import { FcGoogle } from "react-icons/fc";
 
 const Signup = () => {
     const [firebaseError, setFirebaseError] = useState("");
-    const {setUser} = use(AuthContext)
+    const {setLoading,setUser} = useContext(AuthContext)
     const navigate = useNavigate()
     const provider = new GoogleAuthProvider()
     const location = useLocation()
@@ -16,14 +16,20 @@ const Signup = () => {
 // Google Sign In
   const handleGoogleLogin =()=>{
         setFirebaseError("");
+        setLoading(true);
 
        signInWithPopup(auth,provider)
-       .then(async(result)=>{
+       .then((result)=>{
         // console.log(result)
-        setUser(result)
+        setUser(result.user)
+        setLoading(false)
         navigate(location?.state || "/")
 
        })
+       .catch((err) => {
+        setFirebaseError(err.message);
+        setLoading(false);
+      });
   }
 
 

@@ -3,6 +3,8 @@ import Banner from '../../Components/Banner';
 import CoreFeatures from '../../Components/coreFeature';
 import WhyChooseEdumate from '../../Components/ChooseEdu';
 import HowItWorks from '../../Components/HowItWork';
+import FAQ from '../../Components/FAQSection';
+import BlogSection from '../../Components/BlogSection';
 
 const HomePage = () => {
     return (
@@ -11,6 +13,8 @@ const HomePage = () => {
           <CoreFeatures></CoreFeatures>
           <WhyChooseEdumate></WhyChooseEdumate>
           <HowItWorks></HowItWorks>
+          <BlogSection></BlogSection>
+          <FAQ></FAQ>
         </div>
     );
 };

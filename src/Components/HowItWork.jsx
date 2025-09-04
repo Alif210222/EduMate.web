@@ -33,7 +33,7 @@ const HowItWorks = () => {
         viewport={{ once: true }}
         className="text-center mb-12"
       >
-        <h2 className="text-4xl font-extrabold text-gray-800">
+        <h2 className="text-4xl font-extrabold text-gray-800 mt-6">
           How <span className="text-orange-500">EduMate</span> Works
         </h2>
         <p className="mt-3 text-gray-600 max-w-2xl mx-auto">

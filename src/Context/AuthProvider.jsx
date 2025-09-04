@@ -31,7 +31,8 @@ const userInfo = {
     user,
     setUser,
     logOut,
-    loading
+    loading,
+    setLoading
 } 
 
 
