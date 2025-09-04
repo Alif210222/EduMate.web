@@ -60,6 +60,9 @@ With EduMate, students can manage their academic and personal tasks all in one p
 
 ---
 
+# [Visit live site link]( https://edumate-web.netlify.app/ )
+
+
 ## 📷 Screenshots
 
 > Replace the following placeholders with your actual project screenshots:
