@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Search } from "lucide-react";
+import { Search,TriangleAlert } from "lucide-react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const DictionaryPage = () => {
@@ -54,10 +54,11 @@ const DictionaryPage = () => {
         📖 Student Dictionary
       </motion.h1>
 
+
       {/* Search Box */}
       <form
         onSubmit={handleSearch}
-        className="flex items-center gap-3 mb-8 bg-white shadow rounded-lg px-4 py-2"
+        className="flex items-center gap-3 mb-2 bg-white shadow rounded-lg px-4 py-2"
       >
         <Search className="text-gray-400" size={22} />
         <input
@@ -74,6 +75,12 @@ const DictionaryPage = () => {
           Search
         </button>
       </form>
+      <div className="flex gap-2">
+
+        <TriangleAlert className="text-red-500 " />
+         <p className="text-red-500 text-sm">This is free API (For test case).That's why sometimes you don't get the meaning of your expected word.It will update soon ! </p>
+      </div>
+
 
       {/* Error */}
       {error && <p className="text-center text-red-500 font-medium">{error}</p>}

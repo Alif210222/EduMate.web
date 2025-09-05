@@ -85,8 +85,8 @@ const Navbar = () => {
   );
 
   return (
-    <div className="sticky top-0 z-50 px-8 w-full shadow bg-base-200">
-      <div className="navbar px-6 py-3">
+    <div className="sticky top-0 z-50 md:px-8 w-full shadow bg-base-200">
+      <div className="navbar md:px-6 py-3">
         {/* Left */}
         <div className="navbar-start">
           {/* Mobile Menu */}
