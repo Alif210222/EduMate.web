@@ -16,6 +16,9 @@ With EduMate, students can manage their academic and personal tasks all in one p
 
 ## 📌 Features
 
+###  Lesson 
+- You can find your lession ans like(Guid) , Theory question ans from this section . 
+
 ### 🗓️ Class Scheduler
 - Add, update, and delete classes with subject, date, time, and instructor.  
 - View **Today’s Tasks** to stay on track.  
